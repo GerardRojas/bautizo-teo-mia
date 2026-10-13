@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Bautizo de Teo y Mia</title>
+  <meta name="description" content="Sábado 24 de octubre. Bautizo de Teo y Mia. Confirma tu asistencia.">
+  <meta property="og:title" content="Bautizo de Teo y Mia">
+  <meta property="og:description" content="Sábado 24 de octubre. Confirma tu asistencia.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://gerardrojas.github.io/bautizo-teo-mia/pases-1.jpg">
+  <meta property="og:url" content="https://gerardrojas.github.io/bautizo-teo-mia/">
+  <meta name="theme-color" content="#ead7d8">
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    :root {
+      --ink: #3c3832;
+      --muted: #6d675f;
+      --paper: #f7f2eb;
+      --line: #d9cfc3;
+      --sage: #6d7a58;
+      --sage-press: #5c6849;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: #ead7d8;
+      color: var(--ink);
+      font-family: "Iowan Old Style", Baskerville, Palatino, "Palatino Linotype", Georgia, serif;
+    }
+    .wrap {
+      width: min(440px, 100%);
+      margin: 0 auto;
+    }
+    .frame {
+      position: relative;
+    }
+    .frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .panel {
+      margin: -8px 14px 0;
+      padding: 16px 14px calc(18px + env(safe-area-inset-bottom));
+      background: var(--paper);
+      border-radius: 18px 18px 0 0;
+      box-shadow: 0 -8px 28px rgba(70, 48, 40, 0.08);
+    }
+    .where {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+      margin: 0 0 14px;
+      color: var(--ink);
+      text-decoration: none;
+      text-align: center;
+    }
+    .where-k {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .where-line {
+      font-size: 17px;
+      line-height: 1.25;
+    }
+    .where-hint {
+      margin-top: 3px;
+      font-family: Georgia, serif;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .pases {
+      margin: 0 0 12px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      font: inherit;
+      font-size: 17px;
+      text-decoration: none;
+      cursor: pointer;
+      width: 100%;
+    }
+    .btn-yes {
+      background: var(--sage);
+      color: #f6f3ec;
+    }
+    .btn-yes:active { background: var(--sage-press); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+      border-color: var(--line);
+    }
+    .btn-ghost:active { background: rgba(80, 60, 40, 0.05); }
+    .call-panel { margin-top: 8px; }
+    .call-panel[hidden] { display: none; }
+    .tel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      border-radius: 12px;
+      background: var(--sage);
+      color: #f6f3ec;
+      text-decoration: none;
+      font-size: 22px;
+      letter-spacing: 0.04em;
+    }
+    .tel:active { background: var(--sage-press); }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="frame" id="frame">
+      <img id="art" alt="Invitación al bautizo de Teo y Mia, sábado 24 de octubre" width="800" height="1120">
+    </div>
+    <section class="panel">
+      <a class="where" id="maps" href="https://maps.google.com/?q=Blvd.%20Gral.%20Macario%20Gaxiola%2013%2C%20Residencial%20Las%20Misiones%2C%2081294">
+        <span class="where-k">Recepción</span>
+        <span class="where-line">Blvd. Gral. Macario Gaxiola 13</span>
+        <span class="where-line">Residencial Las Misiones, 81294</span>
+        <span class="where-hint">Abrir en el mapa</span>
+      </a>
+      <p class="pases" id="pases" hidden></p>
+      <div class="actions">
+        <a class="btn btn-yes" id="yes" href="#">Confirmo asistencia</a>
+        <a class="btn btn-ghost" id="no" href="#">No puedo asistir</a>
+        <button class="btn btn-ghost" id="call" type="button" aria-expanded="false" aria-controls="callpanel">Contactar por teléfono</button>
+      </div>
+      <div class="call-panel" id="callpanel" hidden>
+        <a class="tel" href="tel:+526681571703">668 157 1703</a>
+      </div>
+    </section>
+  </main>
+  <script>
+    (function () {
+      var q = new URLSearchParams(location.search);
+      var raw = q.get("pases");
+      var known = { "1": 1, "2": 1, "3": 1, "4": 1, "5": 1, "6": 1 };
+      var n = known[raw] ? raw : "1";
+      document.getElementById("art").src = "pases-" + n + ".jpg";
+
+      var extra = known[raw]
+        ? " Tenemos " + raw + (raw === "1" ? " pase." : " pases.")
+        : "";
+      var yes = "Hola, confirmo nuestra asistencia al bautizo de Teo y Mia." + extra;
+      var no = "Hola, gracias por la invitación. No podremos asistir al bautizo de Teo y Mia.";
+      var phone = "526681571703";
+      document.getElementById("yes").href = "https://wa.me/" + phone + "?text=" + encodeURIComponent(yes);
+      document.getElementById("no").href = "https://wa.me/" + phone + "?text=" + encodeURIComponent(no);
+
+      if (known[raw]) {
+        var note = document.getElementById("pases");
+        note.hidden = false;
+        note.textContent = raw === "1"
+          ? "Esta invitación es para 1 pase."
+          : "Esta invitación es para " + raw + " pases.";
+      }
+
+      var call = document.getElementById("call");
+      var panel = document.getElementById("callpanel");
+      call.addEventListener("click", function () {
+        var open = call.getAttribute("aria-expanded") === "true";
+        call.setAttribute("aria-expanded", open ? "false" : "true");
+        panel.hidden = open;
+        if (!open) {
+          var link = panel.querySelector("a");
+          if (link) link.focus();
+        }
+      });
+      if (q.get("tel") === "1") call.click();
+    })();
+  </script>
+</body>
+</html>
