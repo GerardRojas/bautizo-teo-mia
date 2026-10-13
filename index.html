@@ -157,22 +157,18 @@
       var n = known[raw] ? raw : "1";
       document.getElementById("art").src = "pases-" + n + ".jpg";
 
-      var extra = known[raw]
-        ? " Tenemos " + raw + (raw === "1" ? " pase." : " pases.")
-        : "";
+      var extra = " Tenemos " + n + (n === "1" ? " pase." : " pases.");
       var yes = "Hola, confirmo nuestra asistencia al bautizo de Teo y Mia." + extra;
       var no = "Hola, gracias por la invitación. No podremos asistir al bautizo de Teo y Mia.";
       var phone = "526681571703";
       document.getElementById("yes").href = "https://wa.me/" + phone + "?text=" + encodeURIComponent(yes);
       document.getElementById("no").href = "https://wa.me/" + phone + "?text=" + encodeURIComponent(no);
 
-      if (known[raw]) {
-        var note = document.getElementById("pases");
-        note.hidden = false;
-        note.textContent = raw === "1"
-          ? "Esta invitación es para 1 pase."
-          : "Esta invitación es para " + raw + " pases.";
-      }
+      var note = document.getElementById("pases");
+      note.hidden = false;
+      note.textContent = n === "1"
+        ? "Esta invitación es para 1 pase."
+        : "Esta invitación es para " + n + " pases.";
 
       var call = document.getElementById("call");
       var panel = document.getElementById("callpanel");
